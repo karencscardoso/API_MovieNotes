@@ -17,6 +17,7 @@ function myMiddleware(request, response, next) {
 const usersController = new UsersController();    
 
 usersRoutes.post("/", myMiddleware, usersController.create)
+usersRoutes.get("/", usersController.index)
 usersRoutes.put("/:id", usersController.update)
 usersRoutes.delete("/:id", usersController.delete)
 

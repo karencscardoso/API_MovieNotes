@@ -93,6 +93,28 @@ class UsersController {
 
         return response.status(200).json({ message: "Usuário deletado com sucesso." });
     }
+
+    async index(request, response) {
+        const { name } = request.query;
+
+        const users = name 
+            ? await knex("users").where({ name })
+            : await knex("users").select("*");
+
+            const usersWithMovies = await Promise.all(users.map(async (user) => {
+    
+                const movies = await knex("moviesNotes")
+                    .where({ user_id: user.id })
+                    .orderBy("title");
+        
+                return {
+                    ...user,
+                    movies
+                };
+            }));
+        
+            return response.json(usersWithMovies);
+    }
 }
 
 module.exports = UsersController;

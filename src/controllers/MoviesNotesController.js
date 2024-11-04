@@ -77,20 +77,13 @@ class MoviesNotesController {
         console.log(moviesNotes);
         
         const userTags = await knex("tags").where({ user_id })
-        // console.log(userTags);
-        // console.log(moviesNotes);
 
         const moviesNotesWithTags = moviesNotes.map(movieNote => {
             const movieNotesTags = userTags.filter(tag => {
-
-                // console.log(tag.movieNotes_id, moviesNotes.id);
-                console.log(tag);
                 
                return tag.movieNotes_id === movieNote.id
 
             });
-
-                    // console.log(movieNotesTags);
 
             return {
                 ...movieNote,
